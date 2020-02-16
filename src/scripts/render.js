@@ -4,16 +4,19 @@ import {
   BALL_RADIUS,
   BRICK_GAP,
   canvas,
-  context
+  context,
+  BRICK_HEIGHT
 } from './constants';
 
 export function drawTitle() {
+  context.fillStyle = '#4b0f36';
   context.textAlign = 'center';
   context.font = 'bold 60px Courier New';
   context.fillText('RxJS Pong', canvas.width / 2, canvas.height / 2 - 60);
 }
 
 export function drawControls() {
+  context.fillStyle = '#4b0f36';
   context.textAlign = 'center';
   context.font = 'bold 40px Courier New';
   context.fillText(
@@ -24,6 +27,7 @@ export function drawControls() {
 }
 
 export function drawGameOver(text) {
+  context.fillStyle = '#4b0f36';
   context.clearRect(
     canvas.width / 4,
     canvas.height / 3,
@@ -36,12 +40,14 @@ export function drawGameOver(text) {
 }
 
 export function drawScore(score) {
+  context.fillStyle = '#4b0f36';
   context.textAlign = 'left';
   context.font = '20px Arial';
   context.fillText(score, BRICK_GAP, 20);
 }
 
 export function drawPaddle(position) {
+  context.fillStyle = '#4b0f36';
   context.beginPath();
   context.rect(
     position - PADDLE_WIDTH / 2,
@@ -54,6 +60,7 @@ export function drawPaddle(position) {
 }
 
 export function drawBall(ball) {
+  context.fillStyle = 'red';
   context.beginPath();
   context.arc(ball.position.x, ball.position.y, BALL_RADIUS, 0, Math.PI * 2);
   context.fill();
@@ -61,6 +68,7 @@ export function drawBall(ball) {
 }
 
 function drawBrick(brick) {
+  context.fillStyle = '#4b0f36';
   context.beginPath();
   context.rect(
     brick.x - brick.width / 2,
@@ -70,6 +78,10 @@ function drawBrick(brick) {
   );
   context.fill();
   context.closePath();
+  context.fillStyle = '#fff';
+  context.textAlign = 'center';
+  context.font = '16px Arial';
+  context.fillText(brick.price, brick.x, brick.y + (BRICK_HEIGHT / 6));
 }
 
 export function drawBricks(bricks) {

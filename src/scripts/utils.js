@@ -30,7 +30,8 @@ export function bricksFactory() {
         x: j * (width + BRICK_GAP) + width / 2 + BRICK_GAP,
         y: i * (BRICK_HEIGHT + BRICK_GAP) + BRICK_HEIGHT / 2 + BRICK_GAP + 20,
         width: width,
-        height: BRICK_HEIGHT
+        height: BRICK_HEIGHT,
+        price: 1 + Math.round(Math.random() * 20)
       });
     }
   }
@@ -51,17 +52,20 @@ function hit(paddle, ball) {
   return (
     ball.position.x > paddle - PADDLE_WIDTH / 2 &&
     ball.position.x < paddle + PADDLE_WIDTH / 2 &&
-    ball.position.y > canvas.height - PADDLE_HEIGHT - BALL_RADIUS / 2
+    ball.position.y > canvas.height - PADDLE_HEIGHT - BALL_RADIUS
   );
 }
 
 export function calculateObjects(
-  ball,
-  bricks,
-  collisions,
-  score,
-  ticker,
-  paddle
+  {
+    ball,
+    bricks,
+    collisions,
+    score,
+    scoreMax,
+    ticker,
+    paddle
+  }
 ) {
   let survivors = [];
   collisions = {
@@ -72,6 +76,10 @@ export function calculateObjects(
     brick: false
   };
 
+  if (score < scoreMax) {
+    score += 1;
+  }
+
   ball.position.x += ball.direction.x * ticker.deltaTime * BALL_SPEED;
   ball.position.y += ball.direction.y * ticker.deltaTime * BALL_SPEED;
 
@@ -80,7 +88,7 @@ export function calculateObjects(
       survivors.push(brick);
     } else {
       collisions.brick = true;
-      score = score + 10;
+      scoreMax = scoreMax + brick.price;
     }
   });
 
@@ -104,6 +112,7 @@ export function calculateObjects(
     ball: ball,
     bricks: survivors,
     collisions: collisions,
-    score: score
+    score: score,
+    scoreMax: scoreMax
   };
 }

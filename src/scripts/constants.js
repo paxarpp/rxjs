@@ -1,5 +1,5 @@
 export const PADDLE_WIDTH = 200;
-export const PADDLE_HEIGHT = 40;
+export const PADDLE_HEIGHT = 20;
 
 export const BALL_RADIUS = 20;
 

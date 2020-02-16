@@ -39,7 +39,8 @@ const INITIAL_OBJECTS = {
     }
   },
   bricks: bricksFactory(),
-  score: 0
+  score: 0,
+  scoreMax: 0
 };
 
 /* Ticker */
@@ -84,8 +85,8 @@ const paddle$ = ticker$.pipe(
 /* Objects */
 const objects$ = ticker$.pipe(
   withLatestFrom(paddle$),
-  scan(({ ball, bricks, collisions, score }, [ticker, paddle]) =>
-    calculateObjects(ball, bricks, collisions, score, ticker, paddle),
+  scan(({ ball, bricks, collisions, score, scoreMax }, [ticker, paddle]) =>
+    calculateObjects({ ball, bricks, collisions, score, scoreMax, ticker, paddle }),
     INITIAL_OBJECTS
   )
 );
